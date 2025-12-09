@@ -70,15 +70,14 @@ BobSQL is not a SQL server, it's just another Bob.
 │               https://github.com/ha1tch/dxp                     │
 └─────────────────────────────────────────────────────────────────┘
 
-
-
-
-
-
-
-
-
-
-
-
 ```
+Raft carries kilobytes (membership, leader, schema). DXP carries gigabytes (data operations).
+
+**Separation of concerns:**
+
+| Layer | Protocol | Traffic | Frequency |
+|-------|----------|---------|-----------|
+| Control plane | Raft | Tiny | Rare |
+| Data plane | DXP patterns | Massive | Constant |
+
+hashicorp/raft is the right choice for the control plane. It's proven, it's Go, it handles the boring stuff. You just don't route data through it.
